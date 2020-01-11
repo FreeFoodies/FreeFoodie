@@ -1,0 +1,56 @@
+:root {
+	--primary-color: #71dcbe;
+
+	font-family: Avenir, Roboto, sans-serif;
+	
+	width: 100vw;
+	height: 100vh;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	place-items: center;
+}
+
+html, body,
+header, main, footer {
+	display: grid;
+	place-items: stretch;
+}
+
+
+body {
+	grid-template-rows: 3em 1fr;
+}
+
+header {
+	position: sticky;
+	top: 0;
+	height: 4em;
+	z-index: 1;
+
+	background-color: var(--primary-color);
+	color: #fff;
+	backdrop-filter: blur(4px);
+}
+
+nav {
+	display: grid;
+	grid-auto-flow: column;
+	gap: 1em;
+}
+
+#logo {
+	font-weight: bold;
+	font-size: 1.4rem;
+}
+
+main {
+	grid-auto-flow: column;
+}
+
+aside {
+	width: 30%;
+}
