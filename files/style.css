@@ -80,16 +80,18 @@ button {
 .modal {
 	background-color: rgba(255, 255, 255, 0.5);
 	backdrop-filter: blur(4px);
+
 	padding: 1rem;
-	transition: 0.3s;
+	gap: 0.5rem;
+
 	position: fixed;
 	top: 4rem;
 	right: 0;
 	z-index: 1;
 
-	gap: 0.5rem;
+	transition: 0.3s;
 }
-.modal:not([hidden]) {
+.modal[hidden] {
 	opacity: 0;
 	user-select: none;
 	pointer-events: none;
