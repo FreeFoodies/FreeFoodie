@@ -70,16 +70,16 @@ $(document).ready(() => {
 	const db = firebase.firestore();
 
 	// Add a second document with a generated ID.
-	db.collection("users").add({
-		first: "Alan",
-		middle: "Mathison",
-		last: "Tsafd",
-		born: 1912
-	})
-		.then(({id}) => {
-			console.log("Document written with ID: ", id);
-		})
-		.catch(error => {
-			console.error("Error adding document: ", error);
-		});
+	// db.collection("users").add({
+	// 	first: "Alan",
+	// 	middle: "Mathison",
+	// 	last: "Tsafd",
+	// 	born: 1912
+	// })
+	// 	.then(({id}) => {
+	// 		console.log("Document written with ID: ", id);
+	// 	})
+	// 	.catch(error => {
+	// 		console.error("Error adding document: ", error);
+	// 	});
 });
