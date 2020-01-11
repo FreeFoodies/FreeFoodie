@@ -12,11 +12,25 @@
 	<header>
 		<nav>
 			<div id="logo">FreeFoodie</div>
+			<button for="login-modal" onclick="login.hidden=!login.hidden">Login</button>
 		</nav>
 	</header>
 	<main>
 		<div id="map"></div>
 	</main>
+
+	<form id="login" class="modal">
+		<label>
+			<span>Username</span>
+			<input type="text" placeholder="Enter Username" name="uname" required>
+		</label>
+		<label>
+			<span>Password</span>
+			<input type="password" placeholder="Enter Password" name="password" required>
+		</label>
+		
+		<button type="submit">Login</button>
+	</form>
 
 	<script src="./index.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChUgr7AtZ6iJp3fDjbEV1Y-HU5qn8PGQw&callback=whenGoogleMapsAPIReady" async defer></script>
