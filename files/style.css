@@ -85,9 +85,13 @@ button {
 	gap: 0.5rem;
 
 	position: fixed;
-	top: 4rem;
-	right: 0;
 	z-index: 1;
+	/* top: 4rem;
+	right: 0; */
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 
 	transition: 0.3s;
 }
