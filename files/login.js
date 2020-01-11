@@ -2,23 +2,36 @@ function setLoc()
 {
 	if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
+        let pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
         map.setCenter(pos);
-        map.setZoom(8);
-        var image = {
+        map.setZoom(13);
+        let currentInfo = new google.maps.InfoWindow({
+          content: "This is your current location!"
+        });
+        let image = {
 	        url: './images/current_loc.png',
 	        scaledSize: new google.maps.Size(50,50),// scaled size maintaing aspect ratio
 	        origin: new google.maps.Point(0, 0), // origin
-	        anchor: new google.maps.Point(25, 25) // anchor
+	        anchor: new google.maps.Point(50, 50) // anchor
       	};
-        var currentLoc = new google.maps.Marker({
+        let currentLoc = new google.maps.Marker({
           position: map.getCenter(),
           icon: image,
+          animation: google.maps.Animation.BOUNCE,
           map: map
         });
+        setTimeout(function(){ currentLoc.setAnimation(null)}, 3000);
+        currentLoc.addListener('mouseover', function() {
+   		 	currentInfo.open(map, this);
+		});
+
+		// assuming you also want to hide the infowindow when user mouses-out
+		currentLoc.addListener('mouseout', function() {
+		    currentInfo.close();
+		});
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });
