@@ -1,9 +1,33 @@
+const firebaseConfig = {
+	apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
+	authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
+	databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
+	projectId: "food-delivery-for-the-homeless",
+	storageBucket: "food-delivery-for-the-homeless.appspot.com",
+	messagingSenderId: "1048473239710",
+	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
+	measurementId: "G-BWWYR6Y856"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
 function whenGoogleMapsAPIReady() {
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
-
+/*	map.addListener('click', function(e) {
+      db.collection("Pins").doc("test").set({
+	    position: e.latLng
+	  })
+	  .then(function() {
+	      console.log("Document successfully written!");
+	  })
+	  .catch(function(error) {
+	      console.error("Error writing document: ", error);
+	  });
+  });*/
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({coords}) => {
 			map.setCenter({
@@ -54,20 +78,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 $(document).ready(() => {
 	// jQuery methods go here...
 	// Your web app's Firebase configuration
-	const firebaseConfig = {
-		apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
-		authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
-		databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
-		projectId: "food-delivery-for-the-homeless",
-		storageBucket: "food-delivery-for-the-homeless.appspot.com",
-		messagingSenderId: "1048473239710",
-		appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
-		measurementId: "G-BWWYR6Y856"
-	};
-	// Initialize Firebase
-	firebase.initializeApp(firebaseConfig);
 
-	const db = firebase.firestore();
 
 	// Add a second document with a generated ID.
 	// db.collection("users").add({
