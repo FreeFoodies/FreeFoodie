@@ -1,5 +1,38 @@
-$(document).ready(function(){
+function setLoc()
+{
+	if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        map.setCenter(pos);
+        map.setZoom(8);
+        var image = {
+	        url: './images/current_loc.png',
+	        scaledSize: new google.maps.Size(50,50),// scaled size maintaing aspect ratio
+	        origin: new google.maps.Point(0, 0), // origin
+	        anchor: new google.maps.Point(25, 25) // anchor
+      	};
+        var currentLoc = new google.maps.Marker({
+          position: map.getCenter(),
+          icon: image,
+          map: map
+        });
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+ }
 
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        window.alert("Your browser doesn't support location access from google map!");
+      }
+$(document).ready(function(){
+	setLoc();
   // jQuery methods go here...
 	// Your web app's Firebase configuration
 	var firebaseConfig = {
