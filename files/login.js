@@ -1,9 +1,9 @@
 function setLocation() {
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function (position) {
+		navigator.geolocation.getCurrentPosition(({coords}) => {
 			let pos = {
-				lat: position.coords.latitude,
-				lng: position.coords.longitude
+				lat: coords.latitude,
+				lng: coords.longitude
 			};
 			map.setCenter(pos);
 			map.setZoom(13);
@@ -20,18 +20,18 @@ function setLocation() {
 				position: map.getCenter(),
 				icon: image,
 				animation: google.maps.Animation.BOUNCE,
-				map: map
+				map
 			});
-			setTimeout(function () { currentLoc.setAnimation(null) }, 3000);
+			setTimeout(() => { currentLoc.setAnimation(null) }, 3000);
 			currentLoc.addListener('mouseover', function () {
 				currentInfo.open(map, this);
 			});
 
 			// assuming you also want to hide the infowindow when user mouses-out
-			currentLoc.addListener('mouseout', function () {
+			currentLoc.addListener('mouseout', () => {
 				currentInfo.close();
 			});
-		}, function () {
+		}, () => {
 			handleLocationError(true, infoWindow, map.getCenter());
 		});
 	} else {
@@ -43,11 +43,11 @@ function setLocation() {
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	window.alert("Your browser doesn't support location access from google map!");
 }
-$(document).ready(function () {
+$(document).ready(() => {
 	setLocation();
 	// jQuery methods go here...
 	// Your web app's Firebase configuration
-	var firebaseConfig = {
+	const firebaseConfig = {
 		apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
 		authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
 		databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
@@ -60,7 +60,7 @@ $(document).ready(function () {
 	// Initialize Firebase
 	firebase.initializeApp(firebaseConfig);
 
-	var db = firebase.firestore();
+	const db = firebase.firestore();
 
 	// Add a second document with a generated ID.
 	db.collection("users").add({
@@ -69,10 +69,10 @@ $(document).ready(function () {
 		last: "Tsafd",
 		born: 1912
 	})
-		.then(function (docRef) {
-			console.log("Document written with ID: ", docRef.id);
+		.then(({id}) => {
+			console.log("Document written with ID: ", id);
 		})
-		.catch(function (error) {
+		.catch(error => {
 			console.error("Error adding document: ", error);
 		});
 });
