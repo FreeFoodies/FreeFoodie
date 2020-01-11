@@ -12,10 +12,13 @@
 	margin: 0;
 	padding: 0;
 	place-items: center;
+
+	font: inherit;
 }
 
 html, body,
-header, main, footer {
+header, main, footer,
+form {
 	display: grid;
 	place-items: stretch;
 }
@@ -39,7 +42,9 @@ header {
 nav {
 	display: grid;
 	grid-auto-flow: column;
-	gap: 1em;
+	gap: 2em;
+	padding: 0 2em;
+	justify-content: space-between;
 }
 
 #logo {
@@ -53,4 +58,29 @@ main {
 
 aside {
 	width: 30%;
+}
+
+
+
+input, button {
+	-webkit-appearance: none;
+	border: none;
+}
+button {
+	background-color: rgba(#fff, 0.2);
+	line-height: 1;
+	padding: 0.5em 0.75em;
+}
+
+
+
+
+.modal {
+	padding: 1rem;
+	transition: 0.3s;
+}
+.modal:not([hidden]) {
+	opacity: 0;
+	user-select: none;
+	pointer-events: none;
 }
