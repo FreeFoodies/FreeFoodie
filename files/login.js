@@ -1,3 +1,12 @@
+// Get the modal
+let modal = document.getElementById('pinModel');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 function setLoc()
 {
 	if (navigator.geolocation) {
@@ -41,9 +50,10 @@ function setLoc()
     }
  }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        window.alert("Your browser doesn't support location access from google map!");
-      }
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	window.alert("Your browser doesn't support location access from google map!");
+}
+
 $(document).ready(function(){
 	setLoc();
   // jQuery methods go here...
