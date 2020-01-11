@@ -1,7 +1,11 @@
 const $loginForm = document.querySelector("#login")
 $loginForm.onsubmit = e => {
-	console.log(e)
 	e.preventDefault()
+
+	// Get form values
+	const {username, password} = Object.fromEntries(new FormData(e.target).entries())
+	
+	userLogin(username, password)
 }
 
 function userLogin(email, password){
