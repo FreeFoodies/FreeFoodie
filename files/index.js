@@ -1,3 +1,18 @@
+// Initialize Firebase
+firebase.initializeApp({
+	apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
+	authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
+	databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
+	projectId: "food-delivery-for-the-homeless",
+	storageBucket: "food-delivery-for-the-homeless.appspot.com",
+	messagingSenderId: "1048473239710",
+	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
+	measurementId: "G-BWWYR6Y856"
+})
+
+const db = firebase.firestore()
+
+
 // Buttons that toggle [hidden] state
 for(const $button of document.querySelectorAll('[data-toggle]')){
 	$button.onclick = e => {
@@ -23,13 +38,14 @@ function whenGoogleMapsAPIReady(){
 
 	db.collection('Pins').onSnapshot(querySnapshot => {
 		querySnapshot.forEach(doc => {
+			const title = doc.id
 			const data = doc.data()
 			console.log(data.latitude)
 			console.log(data.longitude)
 
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
-					<h3>${doc.id}</h3>
+					<h3>${title}</h3>
 					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" onclick="alert(this.dataset.lat+', '+this.dataset.lng)">Directions</button>
 				`
 			})
@@ -37,7 +53,7 @@ function whenGoogleMapsAPIReady(){
 			const marker = new google.maps.Marker({
 				position: {lat: data.latitude, lng: data.longitude},
 				map,
-				title: doc.id
+				title
 			})
 			marker.addListener('click', () => {
 				infoWindow.open(map, marker)
@@ -120,23 +136,6 @@ function openSideModel(){
 	
 }
 
-// Firebase
-// jQuery methods go here...
-// Your web app's Firebase configuration
-const firebaseConfig = {
-	apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
-	authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
-	databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
-	projectId: "food-delivery-for-the-homeless",
-	storageBucket: "food-delivery-for-the-homeless.appspot.com",
-	messagingSenderId: "1048473239710",
-	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
-	measurementId: "G-BWWYR6Y856"
-}
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig)
-
-const db = firebase.firestore()
 
 // Add a second document with a generated ID.
 // db.collection("users").add({
@@ -163,5 +162,12 @@ $loginForm.onsubmit = e => {
 	const {username, password} = Object.fromEntries(new FormData(e.target).entries())
 	
 	firebase.auth().signInWithEmailAndPassword(username, password)
-		.catch(e => console.error(e))
+		.then(result => {
+			console.log(result)
+			alert(result)
+		})
+		.catch(e => {
+			console.error(e)
+			alert(e)
+		})
 }
