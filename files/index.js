@@ -68,7 +68,7 @@ function whenGoogleMapsAPIReady(){
 		directionsService.route({
 			origin: await getCurrentLocation(),
 			destination: new google.maps.LatLng({ lat: parseFloat(latitude), lng: parseFloat(longitude) }),
-			travelMode: 'DRIVING'
+			travelMode: 'WALKING'
 		}, (response, status) => {
 			if (status === 'OK') {
 				$leftMenu.hidden = false
