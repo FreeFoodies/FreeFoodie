@@ -167,10 +167,6 @@ const db = firebase.firestore();
 // 	});
 
 
-
-
-
-
 // Log In
 
 const $loginForm = document.querySelector("#login")
