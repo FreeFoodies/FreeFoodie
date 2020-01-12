@@ -1,5 +1,9 @@
 :root {
-	--primary-color: #71dcbe;
+	/* #71dcbe; */
+	--primary-color: rgb(236, 189, 44); /* #71dcbe; */
+	--background: radial-gradient(circle at right, rgb(243, 214, 75, 0.7), rgba(236, 159, 44, 0.7));
+
+	--header-height: 4rem;
 
 	font-family: Avenir, Roboto, sans-serif;
 	
@@ -18,16 +22,16 @@
 
 html, body,
 header, main, footer,
-form, form > *, .radio-group > * {
+form, label {
 	display: grid;
 	place-items: stretch;
-	min-width: 0;
+	/* min-width: 0; */
 	min-height: 0;
 }
 
 
 body {
-	grid-template-rows: 4em 1fr;
+	grid-template-rows: var(--header-height) 1fr;
 }
 
 header {
@@ -36,8 +40,9 @@ header {
 	z-index: 1;
 
 	background-color: var(--primary-color);
+	background: var(--background);
 	color: #fff;
-	backdrop-filter: blur(4px) hue-rotate(-60deg);
+	backdrop-filter: blur(5px) hue-rotate(-60deg);
 }
 
 nav {
@@ -57,15 +62,18 @@ nav {
 	font-weight: bold;
 	--text-shadow: rgba(0, 0, 0, 0.2);
 	text-shadow: 0.02em 0.02em 0.1em var(--text-shadow);
-	font-size: 1.4rem;
+	font-size: 1.75rem;
 	transform-origin: left top;
 
 	animation: LogoIntro 1 2s;
 }
 #logo i {
 	display: inline-grid;
-	font-size: 1.25em;
+	font-size: 1.2em;
 	animation: Oscillate 3s infinite;
+}
+#logo span {
+	mix-blend-mode: luminosity;
 }
 @keyframes LogoIntro {
 	from, 70% {
@@ -110,7 +118,8 @@ form {
 .radio-group {
 	display: grid;
 	overflow-x: auto;
-	grid-auto-flow: column;
+	/* grid-auto-flow: column; */
+	grid-template-columns: repeat(auto-fit, minmax(2.7rem, 1fr));
 	gap: 0.5em;
 }
 input[type=radio] {
@@ -129,7 +138,8 @@ input[type=radio] + span, button, textarea {
 
 	/* background-color: rgba(255, 255, 255, 0.9); */
 	background-color: transparent;
-	backdrop-filter: brightness(200%);
+	/* backdrop-filter: brightness(200%); */
+	backdrop-filter: brightness(250%);
 	transition: 0.2s;
 	transition-property: background-color, backdrop-filter, color;
 }
@@ -142,6 +152,12 @@ input[type=radio]:checked + span {
 	/* background-color: var(--primary-color); */
 	background-color: rgba(0, 0, 0, 0.2);
 	color: #fff;
+}
+
+input.inline {
+	border: none;
+	padding: 0;
+	max-width: 10em;
 }
 
 button {
@@ -164,13 +180,14 @@ label span:first-child {
 
 .hideable {
 	transition: 0.2s;
+	transition: 0.3s all, transform 0.5s cubic-bezier(0, 1.03, 0.1, 1.44);
 }
-.modal, #side-menu {
+.modal, .side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
-	backdrop-filter: blur(4px) hue-rotate(-60deg);
+	backdrop-filter: blur(5px) hue-rotate(-60deg);
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
 }
-.modal .close, #side-menu .close {
+.modal .close, .side-menu .close {
 	position: absolute;
 	right: 0.5em;
 	top: 0.5em;
@@ -178,7 +195,7 @@ label span:first-child {
 	height: 2em;
 	padding: 0;
 }
-/*.modal .close::before, .modal #side-menu::before {
+/*.modal .close::before, .modal .side-menu::before {
 	content: '';
 	position: fixed;
 	left: 0;
@@ -201,6 +218,7 @@ label span:first-child {
 	border-radius: 0.5em;
 }
 .modal[hidden] {
+	transform: translate(-50%, -50%) translateY(10%);
 	opacity: 0;
 	user-select: none;
 	pointer-events: none;
@@ -242,6 +260,14 @@ header nav button {
 
 /* Google Maps */
 
+#map {
+	margin-top: calc(-1 * var(--header-height));
+}
+
 #map *, #directions * {
 	font-family: inherit !important;
+}
+
+#map .gm-fullscreen-control, #map [style*="top: 0px"] [role=button] {
+	transform: translateY(var(--header-height));
 }
