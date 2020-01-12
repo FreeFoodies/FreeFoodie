@@ -10,19 +10,8 @@ firebase.initializeApp({
 	measurementId: "G-BWWYR6Y856"
 })
 
-var db = firebase.firestore()
-db.collection("users").add({
-	first: "Alan",
-	middle: "Mathison",
-	last: "Tsafd",
-	born: 1912
-})
-	.then(({id}) => {
-		console.log("Document written with ID: ", id)
-	})
-	.catch(error => {
-		console.error("Error adding document: ", error)
-	})
+const db = firebase.firestore()
+
 
 // Buttons that toggle [hidden] state
 for(const $button of document.querySelectorAll('[data-toggle]')){
@@ -139,18 +128,31 @@ function unsupportedLocationError() {
 
 
 function addPin(){
-var db = firebase.firestore()
-db.collection("users").add({
-	first: "Alan",
-	middle: "Mathison",
-	last: "Tsafd",
-	born: 1912
-})
-	.then(({id}) => {
-		console.log("Document written with ID: ", id)
+	let longitude = document.getElementsByName("longitude").value
+  	let latitude = document.getElementsByName("latitude").value
+  	let description = document.getElementById("description").value
+  	let instruction = document.getElementById("instruction").value
+  	let icon = document.getElementById("icon").value
+  	let phoneNumber = document.getElementById("phone").value
+/*  	console.log(longitude)
+  	console.log(latitude)
+  	console.log(description)
+  	console.log(instruction)
+  	console.log(icon)
+  	console.log(phoneNumber)*/
+  	db.collection("Pins").doc("test1").set({
+		latitude: latitude,
+		longitude: longitude,
+		description:description,
+		instruction:instruction,
+		icon:icon,
+		phone:phoneNumber
 	})
-	.catch(error => {
-		console.error("Error adding document: ", error)
+	.then(function() {
+		console.log("Document successfully written!")
+	})
+	.catch(function(error) {
+		console.error("Error writing document: ", error)
 	})
 }
 
