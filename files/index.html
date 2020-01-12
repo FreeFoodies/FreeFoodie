@@ -13,16 +13,38 @@
 		<nav>
 			<div id="logo">🍞 FreeFoodie</div>
 
-			<button id="add-food-location">+ Add Food Location</button>
+			<button id="add-food-location-button" data-toggle="#add-food-location">+ Add Food Location</button>
 
-			<button id="login-modal-toggle" onclick="login.hidden=!login.hidden">Log In</button>
+			<button id="login-modal-toggle" data-toggle="#login">Log In</button>
 		</nav>
 	</header>
 	<main>
 		<div id="map"></div>
+
+		<form id="add-food-location" class="side-menu" hidden>
+			<label>
+				<span>Describe the food:</span>
+				<textarea placeholder="Leftover coffee and pizza! • Donated"></textarea>
+			</label>
+
+			<label>
+				<span>How to find it:</span>
+				<textarea placeholder="Inside, on the coffee table to the left • " rows="5"></textarea>
+			</label>
+
+			<label>
+				<span>Icon</span>
+				<input type="text" placeholder="Enter Username" name="username" required>
+			</label>
+			
+			<button type="submit">🍞 Post Food</button>
+	
+			<div class="close" onclick="this.parentElement.hidden=true">✕</div>
+		</form>
 	</main>
 
-	<form id="login" class="modal" hidden onsubmit="console.log(this)">
+	<!-- Modal -->
+	<form id="login" class="modal" hidden>
 		<h2>Log In</h2>
 		<label>
 			<span>Username</span>

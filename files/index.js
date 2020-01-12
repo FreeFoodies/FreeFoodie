@@ -1,10 +1,19 @@
+// Buttons that toggle [hidden] state
+for(const $button of document.querySelectorAll('[data-toggle]')){
+	$button.onclick = e => {
+		const $modal = document.querySelector($button.dataset.toggle)
+		$modal.hidden = !$modal.hidden
+	}
+}
+
+// Init Google Maps fuctionality
 function whenGoogleMapsAPIReady() {
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
 
-	const $addFoodLocationButton = $('.add-food-location')
+	const $addFoodLocationButton = $('.add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
 		map.setOptions({draggableCursor: 'crosshair'});
 		map.addListener('click', () => {
