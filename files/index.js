@@ -28,8 +28,8 @@ $foodLocationDetailsForm.onsubmit = e => {
 	e.preventDefault()
 
 	// Get form values
-	const {latitude, longitude, description, username, instructions, icon, phone} = Object.fromEntries(new FormData(e.target).entries())
-	addPin({latitude, longitude, description, username, instructions, icon, phone})
+	const {latitude, longitude, description, instructions, icon, phone} = Object.fromEntries(new FormData(e.target).entries())
+	addPin({latitude, longitude, description, instructions, icon, phone})
 }
 
 function updateFoodLocationDetails(data){
@@ -66,12 +66,14 @@ function whenGoogleMapsAPIReady(){
 
 	db.collection('Pins').onSnapshot(querySnapshot => {
 		querySnapshot.forEach(doc => {
-			const title = doc.id
 			const data = doc.data()
 
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
-					<h3>${title}</h3>
+					<h3>${data.description}</h3>
+					<h3>${data.instructions}</h3>
+					<h3>${data.icon}</h3>
+					<h3>${data.phone}</h3>
 					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" onclick="alert(this.dataset.lat+', '+this.dataset.lng)">Directions</button>
 				`
 			})
@@ -79,10 +81,17 @@ function whenGoogleMapsAPIReady(){
 			const marker = new google.maps.Marker({
 				position: {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)},
 				map,
-				title
 			})
 			marker.addListener('click', () => {
 				infoWindow.open(map, marker)
+			})
+			marker.addListener('mouseover', () => {
+				infoWindow.open(map, marker)
+			})
+
+			// assuming you also want to hide the infowindow when user mouses-out
+			marker.addListener('mouseout', () => {
+				infoWindow.close()
 			})
 		})
 	})
@@ -139,7 +148,7 @@ function unsupportedLocationError() {
 
 
 function addPin(pinData){
-	db.collection('Pins').doc('test1').set(pinData)
+	db.collection('Pins').add(pinData)
 		.then(() => {
 			console.log("Document successfully written!")
 		})
