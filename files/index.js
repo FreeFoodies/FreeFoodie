@@ -77,7 +77,7 @@ function whenGoogleMapsAPIReady(){
 			})
 
 			const marker = new google.maps.Marker({
-				position: {lat: data.latitude, lng: data.longitude},
+				position: {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)},
 				map,
 				title
 			})
