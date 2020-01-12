@@ -32,10 +32,13 @@ $foodLocationDetailsForm.onsubmit = e => {
 	addPin({latitude, longitude, description, username, instructions, icon, phone})
 }
 
-function updateFoodLocationDetails(data){
+function updateFoodLocationDetails({latitude, longitude}){
 	if(data){
 		// Open the modal
 		$sideMenu.hidden = false
+	
+		$foodLocationDetailsForm.elements.namedItem('latitude').value = latitude
+		$foodLocationDetailsForm.elements.namedItem('longitude').value = longitude
 	}else{
 		$sideMenu.hidden = true
 	}
