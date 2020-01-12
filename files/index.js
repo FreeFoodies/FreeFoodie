@@ -128,8 +128,8 @@ function unsupportedLocationError() {
 
 
 function addPin(){
-	let longitude = document.getElementsByName("longitude").value
-  	let latitude = document.getElementsByName("latitude").value
+	let longitude = document.getElementById("longitude").value
+  	let latitude = document.getElementById("latitude").value
   	let description = document.getElementById("description").value
   	let instruction = document.getElementById("instruction").value
   	let icon = document.getElementById("icon").value
