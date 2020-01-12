@@ -12,14 +12,17 @@
 	<header>
 		<nav>
 			<div id="logo">FreeFoodie</div>
-			<button for="login-modal" onclick="login.hidden=!login.hidden">Login</button>
+
+			<button id="add-food-location">+ Add Food Location</button>
+
+			<button id="login-modal-toggle" onclick="login.hidden=!login.hidden">Log In</button>
 		</nav>
 	</header>
 	<main>
 		<div id="map"></div>
 	</main>
 
-	<form id="login" class="modal" hidden onsubmit="console.log(this)" >
+	<form id="login" class="modal" hidden onsubmit="console.log(this)">
 		<h2>Log In</h2>
 		<label>
 			<span>Username</span>
