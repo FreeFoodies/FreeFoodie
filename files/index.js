@@ -1,37 +1,3 @@
-function CenterControl(controlDiv, map) {
-
-        // Set CSS for the control border.
-        var controlUI = document.createElement('div');
-        controlUI.style.backgroundColor = '#fff';
-        controlUI.style.border = '2px solid #fff';
-        controlUI.style.borderRadius = '3px';
-        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-        controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '22px';
-        controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to recenter the map';
-        controlDiv.appendChild(controlUI);
-
-        // Set CSS for the control interior.
-        var controlText = document.createElement('div');
-        controlText.style.color = 'rgb(25,25,25)';
-        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-        controlText.style.fontSize = '16px';
-        controlText.style.lineHeight = '38px';
-        controlText.style.paddingLeft = '5px';
-        controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Add Food Location';
-        controlUI.appendChild(controlText);
-
-        // Setup the click event listeners: simply set the map to Chicago.
-        controlUI.addEventListener('click', function() {
-          map.setOptions({draggableCursor:'crosshair'});
-          map.addListener('click',function(){
-          	alert("open model");
-          });
-        });
-      }
-
 // Buttons that toggle [hidden] state
 for(const $button of document.querySelectorAll('[data-toggle]')){
 	$button.onclick = e => {
@@ -60,10 +26,8 @@ function whenGoogleMapsAPIReady() {
     db.collection("Pins").
     	onSnapshot(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-        	console.log(doc.data().latitude);
-        	console.log(doc.data().longitude);
 			var infowindow = new google.maps.InfoWindow({
-				content: doc.id
+				content: '<h3>doc.id</h3>' + '<button name="directionButton";data-lat=doc.data().latitude.toString();data-lng=doc.data().longitude.toString()>Directions</button>'
 			});
 
 			const marker = new google.maps.Marker({
@@ -72,22 +36,15 @@ function whenGoogleMapsAPIReady() {
 				title: doc.id
 			});
 			marker.addListener('click', function() {
-			infowindow.open(map, marker);
+				infowindow.open(map, marker);
 			});
 		});
 	});
-/*	map.addListener('click', function(e) {
-	db.collection("Pins").doc("test").set({
-		latitude: e.latLng.lat(),
-		longitude: e.latLng.lng()
-	})
-	.then(function() {
-		console.log("Document successfully written!");
-	})
-	.catch(function(error) {
-		console.error("Error writing document: ", error);
+
+	map.addListener('click', function(e) {
+		openSideModel(e.latLng.lat(),e.latLng.lng());
 	});
-});*/
+
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({coords}) => {
 			map.setCenter({
@@ -95,7 +52,7 @@ function whenGoogleMapsAPIReady() {
 				lng: coords.longitude
 			});
 			map.setZoom(13);
-			let currentInfo = new google.maps.InfoWindow({
+			var currentInfo = new google.maps.InfoWindow({
 				content: "This is your current location!"
 			});
 			let image = {
@@ -120,11 +77,11 @@ function whenGoogleMapsAPIReady() {
 				currentInfo.close();
 			});
 		}, () => {
-			handleLocationError(true, infoWindow, map.getCenter());
+			handleLocationError(true, currentInfo, map.getCenter());
 		});
 	} else {
 		// Browser doesn't support Geolocation
-		handleLocationError(false, infoWindow, map.getCenter());
+		handleLocationError(false, currentInfo, map.getCenter());
 	}
 }
 
@@ -133,6 +90,29 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 
+/*function addPin(latitude, longitude){
+	let db = firebase.firestore();
+	let longitude = document.getElementById("long").value;
+  	let latitude = document.getElementById("lat").value;
+  	db.collection("Pins").doc("test").set({
+		latitude: e.latLng.lat(),
+		longitude: e.latLng.lng(),
+		description:,
+		instructions:,
+		icon:,
+		phone:
+	})
+	.then(function() {
+		console.log("Document successfully written!");
+	})
+	.catch(function(error) {
+		console.error("Error writing document: ", error);
+	});
+}*/
+
+function openSideModel(){
+
+}
 
 // Firebase
 // jQuery methods go here...
@@ -179,3 +159,9 @@ $loginForm.onsubmit = e => {
 	firebase.auth().signInWithEmailAndPassword(email, password)
 		.catch(e => console.error(e));
 }
+
+$(document).on('click', 'button', function(){
+	if ($(this).attr('name')=='directionButton'){
+		alert($(this).attr('data-lat')+''+$(this).attr('data-lng'));
+	}
+});
