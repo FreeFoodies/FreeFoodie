@@ -30,7 +30,7 @@ function whenGoogleMapsAPIReady(){
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
 					<h3>${doc.id}</h3>
-					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}">Directions</button>
+					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" onclick="alert(this.dataset.lat+', '+this.dataset.lng)">Directions</button>
 				`
 			})
 
@@ -158,9 +158,3 @@ $loginForm.onsubmit = e => {
 	firebase.auth().signInWithEmailAndPassword(username, password)
 		.catch(e => console.error(e))
 }
-
-$(document).on('click', 'button', function(){
-	if ($(this).attr('name')=='directionButton'){
-		alert($(this).attr('data-lat')+''+$(this).attr('data-lng'))
-	}
-})
