@@ -158,19 +158,21 @@ label span:first-child {
 	letter-spacing: 0.2ch;
 }
 
+.hideable {
+	transition: 0.2s;
+}
 .modal, .side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
-	border-radius: 0.5em;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
-
-	transition: 0.2s;
 }
 .modal .close, .side-menu .close {
 	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 1em;
+	right: 0.5em;
+	top: 0.5em;
+	width: 2em;
+	height: 2em;
+	padding: 0;
 }
 /*.modal .close::before, .modal .side-menu::before {
 	content: '';
@@ -191,6 +193,8 @@ label span:first-child {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+
+	border-radius: 0.5em;
 }
 .modal[hidden] {
 	opacity: 0;
@@ -199,15 +203,20 @@ label span:first-child {
 }
 
 .side-menu {
+	display: block;
 	position: relative;
 	overflow-y: auto;
-}
-.side-menu {
+
+	border-radius: 0.5em;
+	
 	width: 25em;
 }
 .side-menu[hidden] {
 	/* font-size: 0; */
-	width: 0;
+	width: 0em;
+}
+.side-menu form {
+	margin: 0.75em;
 }
 
 
