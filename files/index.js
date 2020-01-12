@@ -10,8 +10,19 @@ firebase.initializeApp({
 	measurementId: "G-BWWYR6Y856"
 })
 
-const db = firebase.firestore()
-
+var db = firebase.firestore()
+db.collection("users").add({
+	first: "Alan",
+	middle: "Mathison",
+	last: "Tsafd",
+	born: 1912
+})
+	.then(({id}) => {
+		console.log("Document written with ID: ", id)
+	})
+	.catch(error => {
+		console.error("Error adding document: ", error)
+	})
 
 // Buttons that toggle [hidden] state
 for(const $button of document.querySelectorAll('[data-toggle]')){
@@ -27,6 +38,10 @@ function updateFoodLocationDetails(data){
 	if(data){
 		// Open the modal
 		$foodLocationDetails.hidden = false
+		var lng = document.getElementsByName("longitude");
+		var lat = document.getElementsByName("latitude");
+		lng.value = data.longitude;
+		lat.value = data.latitude;
 	}else{
 		$foodLocationDetails.hidden = true
 	}
@@ -53,8 +68,6 @@ function whenGoogleMapsAPIReady(){
 		querySnapshot.forEach(doc => {
 			const title = doc.id
 			const data = doc.data()
-			console.log(data.latitude)
-			console.log(data.longitude)
 
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
@@ -125,25 +138,21 @@ function unsupportedLocationError() {
 }
 
 
-/*function addPin(latitude, longitude){
-	let db = firebase.firestore()
-	let longitude = document.getElementById("long").value
-  	let latitude = document.getElementById("lat").value
-  	db.collection("Pins").doc("test").set({
-		latitude: e.latLng.lat(),
-		longitude: e.latLng.lng(),
-		description:,
-		instructions:,
-		icon:,
-		phone:
+function addPin(){
+var db = firebase.firestore()
+db.collection("users").add({
+	first: "Alan",
+	middle: "Mathison",
+	last: "Tsafd",
+	born: 1912
+})
+	.then(({id}) => {
+		console.log("Document written with ID: ", id)
 	})
-	.then(function() {
-		console.log("Document successfully written!")
+	.catch(error => {
+		console.error("Error adding document: ", error)
 	})
-	.catch(function(error) {
-		console.error("Error writing document: ", error)
-	})
-}*/
+}
 
 
 

@@ -26,19 +26,22 @@
 
 		<div class="side-menu food-location-details" hidden>
 			<form id="add-food-location">
+        <input type="number" name="latitude" display="hidden">
+        <input type="number" name="longitude" display="hidden">
+        
 				<label>
 					<span>Describe the food:</span>
-					<textarea placeholder="Leftover coffee and pizza! • Donated"></textarea>
+					<textarea id="description" placeholder="Leftover coffee and pizza! • Donated"></textarea>
 				</label>
 
 				<label>
 					<span>How to find it:</span>
-					<textarea placeholder="Inside, on the coffee table to the left • " rows="5"></textarea>
+					<textarea id="instruction" placeholder="Inside, on the coffee table to the left • " rows="5"></textarea>
 				</label>
 
 				<label>
 					<span>Icon</span>
-					<input type="text" placeholder="Enter Username" name="username" required>
+					<input id="icon" type="text" placeholder="Enter Username" name="username" required>
 				</label>
 				
 				<label>
@@ -47,7 +50,7 @@
 					<small>Format: 123-456-7890</small>
 				</label>
 			
-				<button type="submit">🍞 Post Food</button>
+				<button type="submit" onclick="addPin()">🍞 Post Food</button>
 		
 				<div class="close" onclick="this.parentElement.hidden=true">✕</div>
 			</form>
