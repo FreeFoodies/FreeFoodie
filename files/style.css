@@ -278,3 +278,9 @@ header nav button {
 #map .gm-fullscreen-control, #map [style*="top: 0px"] [role=button] {
 	transform: translateY(var(--header-height));
 }
+
+
+
+#left-menu > * {
+	margin: 1em;
+}

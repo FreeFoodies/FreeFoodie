@@ -86,11 +86,11 @@
 					<input type="tel" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 				</label>
 
-				<p>
+				<p hidden>
 					<small>at <input type="number" step="any" class="inline" name="latitude">, <input type="number" step="any" class="inline" class="small" name="longitude"></small>
 				</p>
 			
-				<button type="submit">🍞 Post Food</button>
+				<button type="submit" id="post-food">🍞 Post Food</button>
 			</form>
 			
 			<button class="close" onclick="this.closest('.hideable').hidden = true">✕</button>
