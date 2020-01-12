@@ -21,6 +21,17 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 	}
 }
 
+
+const $foodLocationDetails = document.querySelector('.food-location-details')
+function updateFoodLocationDetails(data){
+	if(data){
+		// Open the modal
+		$foodLocationDetails.hidden = false
+	}else{
+		$foodLocationDetails.hidden = true
+	}
+}
+
 // Init Google Maps functionality
 function whenGoogleMapsAPIReady(){
 	const map = new google.maps.Map(document.getElementById('map'), {
@@ -32,7 +43,7 @@ function whenGoogleMapsAPIReady(){
 	$addFoodLocationButton.onclick = () => {
 		map.setOptions({draggableCursor: 'crosshair'});
 		map.addListener('click', e => {
-			openSideModel(e.latLng.lat(), e.latLng.lng());
+			updateFoodLocationDetails(e.latLng.lat(), e.latLng.lng());
 		});
 	}
 
@@ -125,9 +136,6 @@ function unsupportedLocationError() {
 	})
 }*/
 
-function openSideModel(){
-	
-}
 
 
 // Add a second document with a generated ID.
