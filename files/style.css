@@ -99,6 +99,10 @@ aside {
 	width: 30%;
 }
 
+form {
+	padding: 1.5em;
+	gap: 1em;
+}
 
 
 input, button, textarea {
@@ -144,9 +148,6 @@ label span {
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
 	border-radius: 0.5em;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
-
-	padding: 1.5em;
-	gap: 1em;
 
 	transition: 0.2s;
 }
