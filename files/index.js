@@ -16,66 +16,65 @@ function whenGoogleMapsAPIReady() {
 	const $addFoodLocationButton = document.querySelector('#add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
 		map.setOptions({draggableCursor: 'crosshair'});
-		map.addListener('click', function(e) {
-			openSideModel(e.latLng.lat(),e.latLng.lng());
+		map.addListener('click', e => {
+			openSideModel(e.latLng.lat(), e.latLng.lng());
 		});
 	}
 
-	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton);
+	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton)
 
 	db.collection('Pins').onSnapshot(querySnapshot => {
-		for(const doc of querySnapshot){
-			console.log(doc.data().latitude);
-			console.log(doc.data().longitude);
+		querySnapshot.forEach(doc => {
+			console.log(doc.data().latitude)
+			console.log(doc.data().longitude)
 			const infoWindow = new google.maps.InfoWindow({
-				content: '<h3>doc.id</h3>' + '<button name="directionButton";data-lat=doc.data().latitude.toString();data-lng=doc.data().longitude.toString()>Directions</button>'
-			});
+				content: '<h3>doc.id</h3>' + '<button name="directionButton"data-lat=doc.data().latitude.toString()data-lng=doc.data().longitude.toString()>Directions</button>'
+			})
 
 			const marker = new google.maps.Marker({
 				position: {lat: doc.data().latitude, lng: doc.data().longitude},
 				map: map,
 				title: doc.id
-			});
-			marker.addListener('click', function() {
-				infoWindow.open(map, marker);
-			});
-		}
-	});
-
+			})
+			marker.addListener('click', () => {
+				infoWindow.open(map, marker)
+			})
+		})
+	})
+	
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({coords}) => {
 			map.setCenter({
 				lat: coords.latitude,
 				lng: coords.longitude
-			});
-			map.setZoom(13);
-			var currentInfo = new google.maps.InfoWindow({
-				content: "This is your current location!"
-			});
-			let image = {
-				url: './images/current_loc.png',
-				scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
-				origin: new google.maps.Point(0, 0), // origin
-				anchor: new google.maps.Point(50, 50) // anchor
-			};
+			})
+			map.setZoom(13)
+			const currentInfo = new google.maps.InfoWindow({
+				content: 'This is your current location!'
+			})
 			let currentLoc = new google.maps.Marker({
 				position: map.getCenter(),
-				icon: image,
+				icon: {
+					url: './images/current_loc.png',
+					scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
+					origin: new google.maps.Point(0, 0), // origin
+					anchor: new google.maps.Point(50, 50) // anchor
+				},
 				animation: google.maps.Animation.BOUNCE,
 				map
-			});
-			setTimeout(() => { currentLoc.setAnimation(null) }, 3000);
-			currentLoc.addListener('mouseover', function () {
-				currentInfo.open(map, this);
-			});
+			})
+			setTimeout(() => { currentLoc.setAnimation(null) }, 3000)
+			currentLoc.addListener('mouseover', () => {
+				currentInfo.open(map, this)
+			})
 
 			// assuming you also want to hide the infowindow when user mouses-out
 			currentLoc.addListener('mouseout', () => {
-				currentInfo.close();
-			});
+				currentInfo.close()
+			})
 		}, () => {
 			unsupportedLocationError()
-		});
+		})
 	} else {
 		// Browser doesn't support Geolocation
 		unsupportedLocationError()
@@ -83,14 +82,14 @@ function whenGoogleMapsAPIReady() {
 }
 
 function unsupportedLocationError() {
-	window.alert("Your browser doesn't support location access from google map!");
+	window.alert("Your browser doesn't support location access from google map!")
 }
 
 
 /*function addPin(latitude, longitude){
-	let db = firebase.firestore();
-	let longitude = document.getElementById("long").value;
-  	let latitude = document.getElementById("lat").value;
+	let db = firebase.firestore()
+	let longitude = document.getElementById("long").value
+  	let latitude = document.getElementById("lat").value
   	db.collection("Pins").doc("test").set({
 		latitude: e.latLng.lat(),
 		longitude: e.latLng.lng(),
@@ -100,11 +99,11 @@ function unsupportedLocationError() {
 		phone:
 	})
 	.then(function() {
-		console.log("Document successfully written!");
+		console.log("Document successfully written!")
 	})
 	.catch(function(error) {
-		console.error("Error writing document: ", error);
-	});
+		console.error("Error writing document: ", error)
+	})
 }*/
 
 function openSideModel(){
@@ -123,11 +122,11 @@ const firebaseConfig = {
 	messagingSenderId: "1048473239710",
 	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
 	measurementId: "G-BWWYR6Y856"
-};
+}
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-const db = firebase.firestore();
+const db = firebase.firestore()
 
 // Add a second document with a generated ID.
 // db.collection("users").add({
@@ -137,11 +136,11 @@ const db = firebase.firestore();
 // 	born: 1912
 // })
 // 	.then(({id}) => {
-// 		console.log("Document written with ID: ", id);
+// 		console.log("Document written with ID: ", id)
 // 	})
 // 	.catch(error => {
-// 		console.error("Error adding document: ", error);
-// 	});
+// 		console.error("Error adding document: ", error)
+// 	})
 
 
 // Log In
@@ -154,11 +153,11 @@ $loginForm.onsubmit = e => {
 	const {username, password} = Object.fromEntries(new FormData(e.target).entries())
 	
 	firebase.auth().signInWithEmailAndPassword(username, password)
-		.catch(e => console.error(e));
+		.catch(e => console.error(e))
 }
 
 $(document).on('click', 'button', function(){
 	if ($(this).attr('name')=='directionButton'){
-		alert($(this).attr('data-lat')+''+$(this).attr('data-lng'));
+		alert($(this).attr('data-lat')+''+$(this).attr('data-lng'))
 	}
-});
+})
