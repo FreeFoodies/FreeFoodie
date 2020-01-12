@@ -32,19 +32,30 @@ function CenterControl(controlDiv, map) {
         });
       }
 
+// Buttons that toggle [hidden] state
+for(const $button of document.querySelectorAll('[data-toggle]')){
+	$button.onclick = e => {
+		const $modal = document.querySelector($button.dataset.toggle)
+		$modal.hidden = !$modal.hidden
+	}
+}
+
+// Init Google Maps fuctionality
 function whenGoogleMapsAPIReady() {
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
 
-	// Create the DIV to hold the control and call the CenterControl()
-    // constructor passing in this DIV.
-    var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, map);
+	const $addFoodLocationButton = $('.add-food-location-button')
+	$addFoodLocationButton.onclick = () => {
+		map.setOptions({draggableCursor: 'crosshair'});
+		map.addListener('click', () => {
+			console.log('Add food location')
+		})
+	}
 
-    centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(centerControlDiv);
+	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton);
 
     db.collection("Pins").
     	onSnapshot(function(querySnapshot) {
@@ -55,28 +66,28 @@ function whenGoogleMapsAPIReady() {
 				content: doc.id
 			});
 
-			var marker = new google.maps.Marker({
+			const marker = new google.maps.Marker({
 				position: {lat: doc.data().latitude, lng: doc.data().longitude},
 				map: map,
 				title: doc.id
 			});
-				marker.addListener('click', function() {
-				infowindow.open(map, marker);
+			marker.addListener('click', function() {
+			infowindow.open(map, marker);
 			});
-        });
-    });
+		});
+	});
 /*	map.addListener('click', function(e) {
-	  db.collection("Pins").doc("test").set({
-	    latitude: e.latLng.lat(),
-	    longitude: e.latLng.lng()
-	  })
-	  .then(function() {
-	      console.log("Document successfully written!");
-	  })
-	  .catch(function(error) {
-	      console.error("Error writing document: ", error);
-	  });
-  });*/
+	db.collection("Pins").doc("test").set({
+		latitude: e.latLng.lat(),
+		longitude: e.latLng.lng()
+	})
+	.then(function() {
+		console.log("Document successfully written!");
+	})
+	.catch(function(error) {
+		console.error("Error writing document: ", error);
+	});
+});*/
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({coords}) => {
 			map.setCenter({

@@ -53,6 +53,7 @@ nav {
 
 main {
 	grid-auto-flow: column;
+	grid-template-columns: 1fr auto;
 }
 
 aside {
@@ -61,23 +62,35 @@ aside {
 
 
 
-input, button {
+input, button, textarea {
 	-webkit-appearance: none;
 	border: none;
 	border-radius: 0.2em;
 	padding: 0.5em 0.75em;
+
+	/* background-color: rgba(255, 255, 255, 0.9); */
+	background-color: transparent;
+	backdrop-filter: brightness(200%);
+	transition: 0.2s;
+
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px;
 }
-form input, form button {
+input:hover, button:hover, textarea:hover {
+	/* background-color: rgba(255, 255, 255, 1); */
+	backdrop-filter: brightness(210%);
+}
+form input, form button, form textarea {
 	border: rgba(0, 0, 0, 0.2) solid 1px;
 }
 button {
-	background-color: rgba(255, 255, 255, 0.9);
 	line-height: 1;
 	padding: 0.5em 0.75em;
+
+	cursor: pointer;
 }
 
 
-.modal {
+.modal, .side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
 	border-radius: 0.5rem;
@@ -86,21 +99,49 @@ button {
 	padding: 1.5rem;
 	gap: 1rem;
 
+	transition: 0.2s;
+}
+.modal .close, .side-menu .close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 1em;
+}
+/*.modal .close::before, .modal .side-menu::before {
+	content: '';
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+	backdrop-filter: grayscale(0.5);
+}*/
+
+.modal {
 	position: fixed;
 	z-index: 1;
 	/* top: 4rem;
 	right: 0; */
-	position: fixed;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-
-	transition: 0.3s;
 }
 .modal[hidden] {
 	opacity: 0;
 	user-select: none;
 	pointer-events: none;
+}
+
+.side-menu {
+	position: relative;
+	overflow-y: auto;
+}
+.side-menu {
+	width: 25rem;
+}
+.modal[hidden] {
+	width: 0;
 }
 
 
