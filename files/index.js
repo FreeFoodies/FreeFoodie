@@ -86,11 +86,6 @@ function whenGoogleMapsAPIReady(){
 			marker.addListener('mouseover', () => {
 				infoWindow.open(map, marker)
 			})
-
-			// assuming you also want to hide the infowindow when user mouses-out
-			marker.addListener('mouseout', () => {
-				infoWindow.close()
-			})
 		})
 	})
 	
