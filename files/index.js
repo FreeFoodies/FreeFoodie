@@ -22,17 +22,22 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 }
 
 
-const $foodLocationDetails = document.querySelector('.food-location-details')
+const $sideMenu = document.querySelector('.side-menu')
+const $foodLocationDetailsForm = document.querySelector('.food-location-details')
+$foodLocationDetailsForm.onsubmit = e => {
+	e.preventDefault()
+
+	// Get form values
+	const {latitude, longitude, description, username, instructions, icon, phone} = Object.fromEntries(new FormData(e.target).entries())
+	addPin({latitude, longitude, description, username, instructions, icon, phone})
+}
+
 function updateFoodLocationDetails(data){
 	if(data){
 		// Open the modal
-		$foodLocationDetails.hidden = false
-		var lng = document.getElementsByName("longitude");
-		var lat = document.getElementsByName("latitude");
-		lng.value = data.longitude;
-		lat.value = data.latitude;
+		$sideMenu.hidden = false
 	}else{
-		$foodLocationDetails.hidden = true
+		$sideMenu.hidden = true
 	}
 }
 
@@ -127,33 +132,14 @@ function unsupportedLocationError() {
 }
 
 
-function addPin(){
-	let longitude = document.getElementById("longitude").value
-  	let latitude = document.getElementById("latitude").value
-  	let description = document.getElementById("description").value
-  	let instruction = document.getElementById("instruction").value
-  	let icon = document.getElementById("icon").value
-  	let phoneNumber = document.getElementById("phone").value
-/*  	console.log(longitude)
-  	console.log(latitude)
-  	console.log(description)
-  	console.log(instruction)
-  	console.log(icon)
-  	console.log(phoneNumber)*/
-  	db.collection("Pins").doc("test1").set({
-		latitude: latitude,
-		longitude: longitude,
-		description:description,
-		instruction:instruction,
-		icon:icon,
-		phone:phoneNumber
-	})
-	.then(function() {
-		console.log("Document successfully written!")
-	})
-	.catch(function(error) {
-		console.error("Error writing document: ", error)
-	})
+function addPin(pinData){
+	db.collection('Pins').doc('test1').set(pinData)
+		.then(() => {
+			console.log("Document successfully written!")
+		})
+		.catch(error => {
+			console.error("Error writing document: ", error)
+		})
 }
 
 

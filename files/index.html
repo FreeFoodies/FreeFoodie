@@ -26,28 +26,27 @@
 
 		<div class="side-menu food-location-details hideable" hidden>
 			<form id="add-food-location">
-        <input type="hidden" id="latitude">
-        <input type="hidden" id="longitude">
-        
+				<input type="hidden" name="latitude">
+				<input type="hidden" name="longitude">
+
 				<label>
 					<span>Describe the food:</span>
-					<textarea id="description" placeholder="Leftover coffee and pizza! • Donated"></textarea>
+					<textarea name="description" placeholder="Leftover coffee and pizza! • Donated"></textarea>
 				<h2>Add a food location</h2>
 
 				<label>
 					<span>Describe the food:</span>
-					<input type="text" placeholder="Leftover pizza and donuts! • Donated"/>
+					<input type="text" name="username" placeholder="Leftover pizza and donuts! • Donated"/>
 				</label>
 
 				<label>
 					<span>How to find it:</span>
-					<textarea id="instruction" placeholder="Inside, on the coffee table to the left • " rows="5"></textarea>
-					<textarea placeholder="Inside, on the coffee table to the left" rows="5"></textarea>
+					<textarea name="instructions" placeholder="Inside, on the coffee table to the left • " rows="5"></textarea>
 				</label>
 
 				<label>
 					<span>Icon</span>
-					<input id="icon" type="text" placeholder="Enter Username" name="username" required>
+					<input name="icon" type="text" placeholder="Enter Username" required>
 					<div class="radio-group">
 						<label><input type="radio" value="🍞" name="icon" required /><span>🍞</span></label>
 						<label><input type="radio" value="☕️" name="icon" required /><span>☕️</span></label>
@@ -79,7 +78,7 @@
 				
 				<label>
 					<span>Phone Number</span>
-					<input type="tel" placeholder="123-456-7890" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+					<input type="tel" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 				</label>
 			
 				<button type="submit" onclick="addPin()">🍞 Post Food</button>
