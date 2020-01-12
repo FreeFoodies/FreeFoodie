@@ -66,14 +66,26 @@ input, button {
 	border: none;
 	border-radius: 0.2em;
 	padding: 0.5em 0.75em;
+
+	/* background-color: rgba(255, 255, 255, 0.9); */
+	background-color: transparent;
+	backdrop-filter: brightness(200%);
+	transition: 0.2s;
+
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px;
+}
+input:hover, button:hover {
+	/* background-color: rgba(255, 255, 255, 1); */
+	backdrop-filter: brightness(210%);
 }
 form input, form button {
 	border: rgba(0, 0, 0, 0.2) solid 1px;
 }
 button {
-	background-color: rgba(255, 255, 255, 0.9);
 	line-height: 1;
 	padding: 0.5em 0.75em;
+
+	cursor: pointer;
 }
 
 
@@ -90,18 +102,33 @@ button {
 	z-index: 1;
 	/* top: 4rem;
 	right: 0; */
-	position: fixed;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 
-	transition: 0.3s;
+	transition: 0.2s;
 }
 .modal[hidden] {
 	opacity: 0;
 	user-select: none;
 	pointer-events: none;
 }
+.modal .close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 1em;
+}
+/*.modal .close::before {
+	content: '';
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+	backdrop-filter: grayscale(0.5);
+}*/
 
 
 
