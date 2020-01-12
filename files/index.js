@@ -1,14 +1,15 @@
 // Initialize Firebase
-firebase.initializeApp({
-	apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
-	authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
-	databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
-	projectId: "food-delivery-for-the-homeless",
-	storageBucket: "food-delivery-for-the-homeless.appspot.com",
-	messagingSenderId: "1048473239710",
-	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
-	measurementId: "G-BWWYR6Y856"
-})
+  var firebaseConfig = {
+    apiKey: "AIzaSyCbHZ9YvdrRofrnPOdsZVjNi4njEDHPxHk",
+    authDomain: "free-foodie.firebaseapp.com",
+    databaseURL: "https://free-foodie.firebaseio.com",
+    projectId: "free-foodie",
+    storageBucket: "free-foodie.appspot.com",
+    messagingSenderId: "41992635191",
+    appId: "1:41992635191:web:eb78d20563f3fff610d0b2"
+  };
+   // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore()
 
