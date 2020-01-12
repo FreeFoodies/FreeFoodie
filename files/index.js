@@ -24,12 +24,11 @@ function whenGoogleMapsAPIReady() {
 
 	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton);
 
-	db.collection("Pins")
-		.onSnapshot(function(querySnapshot) {
-		querySnapshot.forEach(function(doc) {
+	db.collection('Pins').onSnapshot(querySnapshot => {
+		for(const doc of querySnapshot){
 			console.log(doc.data().latitude);
 			console.log(doc.data().longitude);
-			var infowindow = new google.maps.InfoWindow({
+			const infoWindow = new google.maps.InfoWindow({
 				content: '<h3>doc.id</h3>' + '<button name="directionButton";data-lat=doc.data().latitude.toString();data-lng=doc.data().longitude.toString()>Directions</button>'
 			});
 
@@ -39,9 +38,9 @@ function whenGoogleMapsAPIReady() {
 				title: doc.id
 			});
 			marker.addListener('click', function() {
-				infowindow.open(map, marker);
+				infoWindow.open(map, marker);
 			});
-		});
+		}
 	});
 
 	map.addListener('click', function(e) {
@@ -80,15 +79,15 @@ function whenGoogleMapsAPIReady() {
 				currentInfo.close();
 			});
 		}, () => {
-			handleLocationError(true, currentInfo, map.getCenter());
+			unsupportedLocationError()
 		});
 	} else {
 		// Browser doesn't support Geolocation
-		handleLocationError(false, currentInfo, map.getCenter());
+		unsupportedLocationError()
 	}
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+function unsupportedLocationError() {
 	window.alert("Your browser doesn't support location access from google map!");
 }
 
