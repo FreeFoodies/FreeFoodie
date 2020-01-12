@@ -161,12 +161,12 @@ label span:first-child {
 .hideable {
 	transition: 0.2s;
 }
-.modal, .side-menu {
+.modal, #side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
 }
-.modal .close, .side-menu .close {
+.modal .close, #side-menu .close {
 	position: absolute;
 	right: 0.5em;
 	top: 0.5em;
@@ -174,7 +174,7 @@ label span:first-child {
 	height: 2em;
 	padding: 0;
 }
-/*.modal .close::before, .modal .side-menu::before {
+/*.modal .close::before, .modal #side-menu::before {
 	content: '';
 	position: fixed;
 	left: 0;
@@ -202,7 +202,7 @@ label span:first-child {
 	pointer-events: none;
 }
 
-.side-menu {
+#side-menu {
 	display: block;
 	position: relative;
 	overflow-y: auto;
@@ -211,11 +211,11 @@ label span:first-child {
 	
 	width: 25em;
 }
-.side-menu[hidden] {
+#side-menu[hidden] {
 	/* font-size: 0; */
 	width: 0em;
 }
-.side-menu form {
+#side-menu form {
 	margin: 0.75em;
 }
 

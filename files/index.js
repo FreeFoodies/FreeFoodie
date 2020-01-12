@@ -22,8 +22,8 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 }
 
 
-const $sideMenu = document.querySelector('.side-menu')
-const $foodLocationDetailsForm = document.querySelector('.food-location-details')
+const $sideMenu = document.querySelector('#side-menu')
+const $foodLocationDetailsForm = document.querySelector('#food-location-details')
 $foodLocationDetailsForm.onsubmit = e => {
 	e.preventDefault()
 
@@ -38,6 +38,8 @@ function updateFoodLocationDetails(data){
 		$sideMenu.hidden = false
 	
 		const {latitude, longitude} = data
+		console.dir($foodLocationDetailsForm)
+		console.log($foodLocationDetailsForm, $foodLocationDetailsForm.elements)
 		$foodLocationDetailsForm.elements.namedItem('latitude').value = latitude
 		$foodLocationDetailsForm.elements.namedItem('longitude').value = longitude
 	}else{
