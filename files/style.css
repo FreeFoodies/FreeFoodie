@@ -41,8 +41,8 @@ header {
 nav {
 	display: grid;
 	grid-auto-flow: column;
-	gap: 2em;
-	padding: 0 1.5em;
+	gap: 1em;
+	padding: 0 1.25em;
 	justify-content: space-between;
 }
 
@@ -50,19 +50,20 @@ nav {
 	display: grid;
 	grid-auto-flow: column;
 	align-items: center;
-	gap: 0.25em;
+	gap: 0.3em;
 	
 	font-weight: bold;
-	text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.2);
+	--text-shadow: rgba(0, 0, 0, 0.2);
+	text-shadow: 0.02em 0.02em 0.1em var(--text-shadow);
 	font-size: 1.4rem;
 	transform-origin: left top;
 
-	animation: LogoIntro 1 3s;
+	animation: LogoIntro 1 2s;
 }
 #logo i {
 	display: inline-grid;
-	font-size: 1.2em;
-	animation: Oscillate 2s infinite;
+	font-size: 1.25em;
+	animation: Oscillate 3s infinite;
 }
 @keyframes LogoIntro {
 	from, 70% {
@@ -72,13 +73,21 @@ nav {
 		transform: translate(-50%, -50%) translate(50vw, 50vh);
 		z-index: 1;
 	}
+	from {
+		color: rgba(255, 255, 255, 0.02);
+		text-shadow: 0 0 transparent;
+	}
+	20% {
+		color: unset;
+		text-shadow: 0 0 transparent;
+	}
 	to {
 		box-shadow: 0 0 0 100vw transparent;
 	}
 }
 @keyframes Oscillate {
-	25% { translate: transform(0.1em); }
-	75% { translate: transform(-0.1em); }
+	from, to { transform: translateY(0.02em); }
+	50% { transform: translateY(-0.02em); }
 }
 
 main {
