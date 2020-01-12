@@ -6,15 +6,16 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 	}
 }
 
-// Init Google Maps fuctionality
+// Init Google Maps functionality
 function whenGoogleMapsAPIReady() {
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
 
-	const $addFoodLocationButton = $('.add-food-location-button')
+	const $addFoodLocationButton = document.querySelector('#add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
+		console.log(9)
 		map.setOptions({draggableCursor: 'crosshair'});
 		map.addListener('click', () => {
 			console.log('Add food location')
@@ -23,9 +24,11 @@ function whenGoogleMapsAPIReady() {
 
 	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton);
 
-    db.collection("Pins").
-    	onSnapshot(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
+	db.collection("Pins")
+		.onSnapshot(function(querySnapshot) {
+		querySnapshot.forEach(function(doc) {
+			console.log(doc.data().latitude);
+			console.log(doc.data().longitude);
 			var infowindow = new google.maps.InfoWindow({
 				content: '<h3>doc.id</h3>' + '<button name="directionButton";data-lat=doc.data().latitude.toString();data-lng=doc.data().longitude.toString()>Directions</button>'
 			});
@@ -156,7 +159,7 @@ $loginForm.onsubmit = e => {
 	// Get form values
 	const {username, password} = Object.fromEntries(new FormData(e.target).entries())
 	
-	firebase.auth().signInWithEmailAndPassword(email, password)
+	firebase.auth().signInWithEmailAndPassword(username, password)
 		.catch(e => console.error(e));
 }
 
