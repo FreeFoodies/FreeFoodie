@@ -7,7 +7,7 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 }
 
 // Init Google Maps functionality
-function whenGoogleMapsAPIReady() {
+function whenGoogleMapsAPIReady(){
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
@@ -25,15 +25,20 @@ function whenGoogleMapsAPIReady() {
 
 	db.collection('Pins').onSnapshot(querySnapshot => {
 		querySnapshot.forEach(doc => {
-			console.log(doc.data().latitude)
-			console.log(doc.data().longitude)
+			const data = doc.data()
+			console.log(data.latitude)
+			console.log(data.longitude)
+
 			const infoWindow = new google.maps.InfoWindow({
-				content: '<h3>doc.id</h3>' + '<button name="directionButton"data-lat=doc.data().latitude.toString()data-lng=doc.data().longitude.toString()>Directions</button>'
+				content: `
+					<h3>${doc.id}</h3>
+					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}">Directions</button>
+				`
 			})
 
 			const marker = new google.maps.Marker({
-				position: {lat: doc.data().latitude, lng: doc.data().longitude},
-				map: map,
+				position: {lat: data.latitude, lng: data.longitude},
+				map,
 				title: doc.id
 			})
 			marker.addListener('click', () => {
