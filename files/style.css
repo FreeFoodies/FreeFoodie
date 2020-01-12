@@ -157,7 +157,7 @@ input[type=radio]:checked + span {
 input.inline {
 	border: none;
 	padding: 0;
-	max-width: 10em;
+	max-width: 7em;
 }
 
 button {
