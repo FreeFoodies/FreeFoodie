@@ -38,8 +38,6 @@ function updateFoodLocationDetails(data){
 		$sideMenu.hidden = false
 	
 		const {latitude, longitude} = data
-		console.dir($foodLocationDetailsForm)
-		console.log($foodLocationDetailsForm, $foodLocationDetailsForm.elements)
 		$foodLocationDetailsForm.elements.namedItem('latitude').value = latitude
 		$foodLocationDetailsForm.elements.namedItem('longitude').value = longitude
 	}else{

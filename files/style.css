@@ -112,9 +112,11 @@ form {
 	gap: 0.5em;
 }
 input[type=radio] {
-	display: none;
+	visibility: hidden;
+	position: fixed;
 }
-input[type=text], input[type=password], input[type=tel], input[type=radio] + span, button, textarea {
+input[type=text], input[type=password], input[type=tel], input[type=number],
+input[type=radio] + span, button, textarea {
 	-webkit-appearance: none;
 	border: none;
 	border-radius: 0.2em;
