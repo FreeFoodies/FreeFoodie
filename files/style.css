@@ -157,7 +157,7 @@ input[type=radio]:checked + span {
 input.inline {
 	border: none;
 	padding: 0;
-	max-width: 7em;
+	max-width: 6em;
 }
 
 button {
@@ -239,6 +239,13 @@ label span:first-child {
 }
 .side-menu form {
 	margin: 0.75em;
+}
+
+
+
+small {
+	font-size: 0.8em;
+	opacity: 0.8;
 }
 
 
