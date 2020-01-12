@@ -47,12 +47,22 @@ nav {
 }
 
 #logo {
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	gap: 0.25em;
+	
 	font-weight: bold;
 	text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.2);
 	font-size: 1.4rem;
 	transform-origin: left top;
 
 	animation: LogoIntro 1 3s;
+}
+#logo i {
+	display: inline-grid;
+	font-size: 1.2em;
+	animation: Oscillate 2s infinite;
 }
 @keyframes LogoIntro {
 	from, 70% {
@@ -65,6 +75,10 @@ nav {
 	to {
 		box-shadow: 0 0 0 100vw transparent;
 	}
+}
+@keyframes Oscillate {
+	25% { translate: transform(0.1em); }
+	75% { translate: transform(-0.1em); }
 }
 
 main {
@@ -120,7 +134,7 @@ label span {
 	background-color: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
 	border-radius: 0.5em;
-	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
 
 	padding: 1.5em;
 	gap: 1em;
