@@ -38,13 +38,14 @@ function whenGoogleMapsAPIReady(){
 
 	db.collection('Pins').onSnapshot(querySnapshot => {
 		querySnapshot.forEach(doc => {
+			const title = doc.id
 			const data = doc.data()
 			console.log(data.latitude)
 			console.log(data.longitude)
 
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
-					<h3>${doc.id}</h3>
+					<h3>${title}</h3>
 					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" onclick="alert(this.dataset.lat+', '+this.dataset.lng)">Directions</button>
 				`
 			})
@@ -52,7 +53,7 @@ function whenGoogleMapsAPIReady(){
 			const marker = new google.maps.Marker({
 				position: {lat: data.latitude, lng: data.longitude},
 				map,
-				title: doc.id
+				title
 			})
 			marker.addListener('click', () => {
 				infoWindow.open(map, marker)
@@ -154,5 +155,12 @@ $loginForm.onsubmit = e => {
 	const {username, password} = Object.fromEntries(new FormData(e.target).entries())
 	
 	firebase.auth().signInWithEmailAndPassword(username, password)
-		.catch(e => console.error(e))
+		.then(result => {
+			console.log(result)
+			alert(result)
+		})
+		.catch(e => {
+			console.error(e)
+			alert(e)
+		})
 }
