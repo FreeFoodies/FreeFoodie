@@ -21,8 +21,6 @@ function whenGoogleMapsAPIReady(){
 		});
 	}
 
-	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton)
-
 	db.collection('Pins').onSnapshot(querySnapshot => {
 		querySnapshot.forEach(doc => {
 			const data = doc.data()
