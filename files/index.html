@@ -24,7 +24,7 @@
 	<main>
 		<div id="map"></div>
 
-		<div class="side-menu" hidden>
+		<div class="side-menu food-location-details" hidden>
 			<form id="add-food-location">
 				<label>
 					<span>Describe the food:</span>
@@ -71,15 +71,18 @@
 		<div class="close" onclick="this.parentElement.hidden=true">✕</div>
 	</form>
 
-	<!--Firebase SDK setup-->
+	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-auth.js"></script>
 
+	<!-- Vue -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+	<!-- FreeFoodie! -->
 	<script src="./index.js"></script>
 
+	<!-- Google Maps API -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChUgr7AtZ6iJp3fDjbEV1Y-HU5qn8PGQw&callback=whenGoogleMapsAPIReady" async defer></script>
 </body>
 
