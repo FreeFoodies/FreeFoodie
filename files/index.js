@@ -1,14 +1,15 @@
 // Initialize Firebase
-firebase.initializeApp({
-	apiKey: "AIzaSyAOI-pfdx43XfrMk9fBk0vfYH9kQzSOzP0",
-	authDomain: "food-delivery-for-the-homeless.firebaseapp.com",
-	databaseURL: "https://food-delivery-for-the-homeless.firebaseio.com",
-	projectId: "food-delivery-for-the-homeless",
-	storageBucket: "food-delivery-for-the-homeless.appspot.com",
-	messagingSenderId: "1048473239710",
-	appId: "1:1048473239710:web:5723f204a0e5a2fef27b8f",
-	measurementId: "G-BWWYR6Y856"
-})
+  var firebaseConfig = {
+    apiKey: "AIzaSyCbHZ9YvdrRofrnPOdsZVjNi4njEDHPxHk",
+    authDomain: "free-foodie.firebaseapp.com",
+    databaseURL: "https://free-foodie.firebaseio.com",
+    projectId: "free-foodie",
+    storageBucket: "free-foodie.appspot.com",
+    messagingSenderId: "41992635191",
+    appId: "1:41992635191:web:eb78d20563f3fff610d0b2"
+  };
+   // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore()
 
@@ -77,7 +78,7 @@ function whenGoogleMapsAPIReady(){
 					<h3>${data.icon}</h3>
 					<h3>${data.phone}</h3>
 					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" 
-					onclick="${calculateAndDisplayRoute(directionsService,directionsRenderer, parseFloat(data.latitude),parseFloat(data.longitude), map.getCenter())}">Directions</button>
+					onclick="alert()">Directions</button>
 				`
 			})
 
@@ -138,18 +139,22 @@ function whenGoogleMapsAPIReady(){
 		// Browser doesn't support Geolocation
 		unsupportedLocationError()
 	}
+	var latitude = 34.43
+	var longitude = -119.827
+	var latitude1 = 34.427
+	var longitude1 = -119.85
+
+	calculateAndDisplayRoute(directionsService,directionsRenderer,latitude,longitude,latitude1,longitude1)
 }
 
 function unsupportedLocationError() {
 	window.alert("Your browser doesn't support location access from google map!")
 }
 
-function calculateAndDisplayRoute(directionsService, directionsRenderer, latitude, longitude, centerOfMap) {
-	console.log(latitude);
-	console.log(longitude);
-/*    directionsService.route({
+function calculateAndDisplayRoute(directionsService, directionsRenderer, latitude, longitude, latitude1, longitude1) {
+    directionsService.route({
       origin: new google.maps.LatLng({lat: latitude, lng: longitude}),
-      destination: centerOfMap,
+      destination: new google.maps.LatLng({lat: latitude1, lng: longitude1}),
       travelMode: 'DRIVING'
     }, function(response, status) {
       if (status === 'OK') {
@@ -157,7 +162,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, latitud
       } else {
         window.alert('Directions request failed due to ' + status);
       }
-    });*/
+    });
   }
 
 function addPin(pinData){
