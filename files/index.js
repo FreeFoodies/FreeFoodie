@@ -28,9 +28,8 @@ function CenterControl(controlDiv, map) {
           map.setOptions({draggableCursor:'crosshair'});
           map.addListener('click',function(){
           	alert("open model");
-          })
+          });
         });
-
       }
 
 function whenGoogleMapsAPIReady() {
@@ -53,13 +52,13 @@ function whenGoogleMapsAPIReady() {
         	console.log(doc.data().latitude);
         	console.log(doc.data().longitude);
 			var infowindow = new google.maps.InfoWindow({
-				content: "Pin info"
+				content: doc.id
 			});
 
 			var marker = new google.maps.Marker({
 				position: {lat: doc.data().latitude, lng: doc.data().longitude},
 				map: map,
-				title: 'Test Pin'
+				title: doc.id
 			});
 				marker.addListener('click', function() {
 				infowindow.open(map, marker);
