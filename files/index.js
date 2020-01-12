@@ -47,28 +47,35 @@ function whenGoogleMapsAPIReady(){
 	
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(({coords}) => {
-			map.setCenter({
+			let pos = {
 				lat: coords.latitude,
 				lng: coords.longitude
-			})
-			map.setZoom(13)
-			const currentInfo = new google.maps.InfoWindow({
-				content: 'This is your current location!'
-			})
+			};
+			map.setCenter(pos);
+			map.setZoom(13);
+			let currentInfo = new google.maps.InfoWindow({
+				content: "This is your current location!"
+			});
+			let image = {
+				url: './images/current_loc.png',
+				scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
+				origin: new google.maps.Point(0, 0), // origin
+				anchor: new google.maps.Point(50, 50) // anchor
+			};
 			let currentLoc = new google.maps.Marker({
 				position: map.getCenter(),
-				icon: {
-					url: './images/current_loc.png',
-					scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
-					origin: new google.maps.Point(0, 0), // origin
-					anchor: new google.maps.Point(50, 50) // anchor
-				},
+				icon: image,
 				animation: google.maps.Animation.BOUNCE,
-				map
-			})
+				map:map
+			});
 			setTimeout(() => { currentLoc.setAnimation(null) }, 3000)
+
+			currentLoc.addListener('click', () => {
+				currentInfo.open(map, currentLoc)
+			})
+
 			currentLoc.addListener('mouseover', () => {
-				currentInfo.open(map, this)
+				currentInfo.open(map, currentLoc)
 			})
 
 			// assuming you also want to hide the infowindow when user mouses-out
