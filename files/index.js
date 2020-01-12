@@ -15,11 +15,10 @@ function whenGoogleMapsAPIReady() {
 
 	const $addFoodLocationButton = document.querySelector('#add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
-		console.log(9)
 		map.setOptions({draggableCursor: 'crosshair'});
-		map.addListener('click', () => {
-			console.log('Add food location')
-		})
+		map.addListener('click', function(e) {
+			openSideModel(e.latLng.lat(),e.latLng.lng());
+		});
 	}
 
 	// map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push($addFoodLocationButton);
@@ -42,10 +41,6 @@ function whenGoogleMapsAPIReady() {
 				infowindow.open(map, marker);
 			});
 		});
-	});
-
-	map.addListener('click', function(e) {
-		openSideModel(e.latLng.lat(),e.latLng.lng());
 	});
 
 	if (navigator.geolocation) {
@@ -114,7 +109,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }*/
 
 function openSideModel(){
-
+	
 }
 
 // Firebase
