@@ -22,8 +22,12 @@ for(const $button of document.querySelectorAll('[data-toggle]')){
 }
 
 
-const $sideMenu = document.querySelector('#side-menu')
+const $leftMenu = document.querySelector('#left-menu')
+
+
+const $rightMenu = document.querySelector('#right-menu')
 const $foodLocationDetailsForm = document.querySelector('#food-location-details')
+
 $foodLocationDetailsForm.onsubmit = e => {
 	e.preventDefault()
 
@@ -35,26 +39,45 @@ $foodLocationDetailsForm.onsubmit = e => {
 function updateFoodLocationDetails(data){
 	if(data){
 		// Open the modal
-		$sideMenu.hidden = false
+		$rightMenu.hidden = false
 	
 		const {latitude, longitude} = data
 		$foodLocationDetailsForm.elements.namedItem('latitude').value = latitude
 		$foodLocationDetailsForm.elements.namedItem('longitude').value = longitude
 	}else{
-		$sideMenu.hidden = true
+		$rightMenu.hidden = true
 	}
 }
 
+
 // Init Google Maps functionality
 function whenGoogleMapsAPIReady(){
-	var directionsRenderer = new google.maps.DirectionsRenderer;
-    var directionsService = new google.maps.DirectionsService;
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
+
+
+	const directionsRenderer = new google.maps.DirectionsRenderer();
+	const directionsService = new google.maps.DirectionsService();
 	directionsRenderer.setMap(map);
-   	directionsRenderer.setPanel(document.getElementById('right-panel'));
+	directionsRenderer.setPanel(document.querySelector('#directions'));
+	
+	window.getDirections = async ({latitude, longitude}) => {
+		directionsService.route({
+			origin: await getCurrentLocation(),
+			destination: new google.maps.LatLng({ lat: parseFloat(latitude), lng: parseFloat(longitude) }),
+			travelMode: 'DRIVING'
+		}, (response, status) => {
+			if (status === 'OK') {
+				$leftMenu.hidden = false
+				directionsRenderer.setDirections(response);
+			} else {
+				window.alert('Couldn\'t get directions: ' + status);
+			}
+		});
+	}
+
 
 	const $addFoodLocationButton = document.querySelector('#add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
@@ -63,102 +86,91 @@ function whenGoogleMapsAPIReady(){
 			const latitude = e.latLng.lat()
 			const longitude = e.latLng.lng()
 			updateFoodLocationDetails({latitude, longitude});
-		});
+		}, 'once');
 	}
 
+
 	db.collection('Pins').onSnapshot(querySnapshot => {
-		querySnapshot.forEach(doc => {
-			const data = doc.data()
+		for(const doc of querySnapshot.docs){
+			const id = doc.id
+			const foodLocation = doc.data()
+			console.log(foodLocation)
+
+			const marker = new google.maps.Marker({
+				position: {
+					lat: parseFloat(foodLocation.latitude),
+					lng: parseFloat(foodLocation.longitude)
+				},
+				label: foodLocation.icon,
+				map,
+			})
 
 			const infoWindow = new google.maps.InfoWindow({
 				content: `
-					<h3>${data.description}</h3>
-					<h3>${data.instructions}</h3>
-					<h3>${data.icon}</h3>
-					<h3>${data.phone}</h3>
-					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" 
-					onclick="${calculateAndDisplayRoute(directionsService,directionsRenderer, parseFloat(data.latitude),parseFloat(data.longitude), map.getCenter())}">Directions</button>
+					<h2>${foodLocation.description}</h2>
+					<p>${foodLocation.instructions}</p>
+					<p>${foodLocation.phone}</p>
+					<button class="get-directions-button" onclick="getDirections({latitude: ${parseFloat(foodLocation.latitude)}, longitude: ${parseFloat(foodLocation.longitude)}})">Get Directions</button>
 				`
 			})
 
-			const marker = new google.maps.Marker({
-				position: {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)},
-				map,
-			})
+			let isOpenByClick = false
 			marker.addListener('click', () => {
-				infoWindow.open(map, marker)
+				if(isOpenByClick)
+					infoWindow.close()
+				else
+					infoWindow.open(map, marker)
+				isOpenByClick = !isOpenByClick
 			})
 			marker.addListener('mouseover', () => {
 				infoWindow.open(map, marker)
 			})
-		})
+			marker.addListener('mouseleave', () => {
+				if(!isOpenByClick)
+					infoWindow.close()
+			})
+		}
 	})
 	
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(({coords}) => {
-			let pos = {
-				lat: coords.latitude,
-				lng: coords.longitude
-			};
-			map.setCenter(pos);
-			map.setZoom(13);
-			let currentInfo = new google.maps.InfoWindow({
-				content: "This is your current location!"
-			});
-			let image = {
-				url: './images/current_loc.png',
-				scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
-				origin: new google.maps.Point(0, 0), // origin
-				anchor: new google.maps.Point(50, 50) // anchor
-			};
-			let currentLoc = new google.maps.Marker({
-				position: map.getCenter(),
-				icon: image,
-				animation: google.maps.Animation.BOUNCE,
-				map:map
-			});
-			setTimeout(() => { currentLoc.setAnimation(null) }, 3000)
 
-			currentLoc.addListener('click', () => {
-				currentInfo.open(map, currentLoc)
-			})
+	// Location
+	getCurrentLocation().then(location => {
+		map.setCenter(location);
+		map.setZoom(13);
+		let currentInfo = new google.maps.InfoWindow({
+			content: "You are here"
+		});
+		let image = {
+			url: './images/current_loc.png',
+			scaledSize: new google.maps.Size(50, 50),// scaled size maintaing aspect ratio
+			origin: new google.maps.Point(0, 0), // origin
+			anchor: new google.maps.Point(50, 50) // anchor
+		};
+		let currentLoc = new google.maps.Marker({
+			position: location,
+			icon: image,
+			animation: google.maps.Animation.BOUNCE,
+			map:map
+		});
+		setTimeout(() => { currentLoc.setAnimation(null) }, 3000)
 
-			currentLoc.addListener('mouseover', () => {
-				currentInfo.open(map, currentLoc)
-			})
-
-			// assuming you also want to hide the infowindow when user mouses-out
-			currentLoc.addListener('mouseout', () => {
-				currentInfo.close()
-			})
-		}, () => {
-			unsupportedLocationError()
+		currentLoc.addListener('click', () => {
+			currentInfo.open(map, currentLoc)
 		})
-	} else {
-		// Browser doesn't support Geolocation
-		unsupportedLocationError()
-	}
+
+		currentLoc.addListener('mouseover', () => {
+			currentInfo.open(map, currentLoc)
+		})
+
+		// assuming you also want to hide the infowindow when user mouses-out
+		currentLoc.addListener('mouseleave', () => {
+			currentInfo.close()
+		})
+	}).catch(e => {
+		window.alert(e)
+	})
 }
 
-function unsupportedLocationError() {
-	window.alert("Your browser doesn't support location access from google map!")
-}
-
-function calculateAndDisplayRoute(directionsService, directionsRenderer, latitude, longitude, centerOfMap) {
-	console.log(latitude);
-	console.log(longitude);
-/*    directionsService.route({
-      origin: new google.maps.LatLng({lat: latitude, lng: longitude}),
-      destination: centerOfMap,
-      travelMode: 'DRIVING'
-    }, function(response, status) {
-      if (status === 'OK') {
-        directionsRenderer.setDirections(response);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });*/
-  }
 
 function addPin(pinData){
 	db.collection('Pins').add(pinData)
@@ -172,23 +184,21 @@ function addPin(pinData){
 
 
 
-// Add a second document with a generated ID.
-// db.collection("users").add({
-// 	first: "Alan",
-// 	middle: "Mathison",
-// 	last: "Tsafd",
-// 	born: 1912
-// })
-// 	.then(({id}) => {
-// 		console.log("Document written with ID: ", id)
-// 	})
-// 	.catch(error => {
-// 		console.error("Error adding document: ", error)
-// 	})
+const getCurrentLocation = () => new Promise((resolve, reject) => {
+	if(navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(({coords}) => {
+			resolve({
+				lat: coords.latitude,
+				lng: coords.longitude
+			})
+		})
+	}else{
+		reject("We couldn't get your current location.")
+	}
+})
 
 
 // Log In
-
 const $loginForm = document.querySelector("#login")
 $loginForm.onsubmit = e => {
 	e.preventDefault()

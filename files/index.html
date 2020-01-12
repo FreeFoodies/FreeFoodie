@@ -21,10 +21,17 @@
 			<button id="login-modal-toggle" data-toggle="#login">Log In</button>
 		</nav>
 	</header>
+
 	<main>
+		<div id="left-menu" class="side-menu hideable" hidden>
+			<div id="directions"></div>
+		
+			<button class="close" onclick="this.closest('.hideable').hidden = true">✕</button>
+		</div>
+
 		<div id="map"></div>
-    <div id="right-panel"></div>
-		<div id="side-menu" class="hideable" hidden>
+		
+		<div id="right-menu" class="side-menu hideable" hidden>
 			<form id="food-location-details">
 				<h2>Add a food location</h2>
 

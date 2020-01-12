@@ -92,7 +92,7 @@ nav {
 
 main {
 	grid-auto-flow: column;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: auto 1fr auto;
 }
 
 aside {
@@ -204,7 +204,7 @@ label span:first-child {
 	pointer-events: none;
 }
 
-#side-menu {
+.side-menu {
 	display: block;
 	position: relative;
 	overflow-y: auto;
@@ -213,11 +213,11 @@ label span:first-child {
 	
 	width: 25em;
 }
-#side-menu[hidden] {
+.side-menu[hidden] {
 	/* font-size: 0; */
 	width: 0em;
 }
-#side-menu form {
+.side-menu form {
 	margin: 0.75em;
 }
 
