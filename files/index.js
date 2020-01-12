@@ -77,7 +77,7 @@ function whenGoogleMapsAPIReady(){
 					<h3>${data.icon}</h3>
 					<h3>${data.phone}</h3>
 					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" 
-					onclick="${calculateAndDisplayRoute(directionsRenderer,directionsService, data.latitude,data.longitude, map.getCenter())}">Directions</button>
+					onclick="${calculateAndDisplayRoute(directionsService,directionsRenderer, parseFloat(data.latitude),parseFloat(data.longitude), map.getCenter())}">Directions</button>
 				`
 			})
 
@@ -145,7 +145,9 @@ function unsupportedLocationError() {
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer, latitude, longitude, centerOfMap) {
-    directionsService.route({
+	console.log(latitude);
+	console.log(longitude);
+/*    directionsService.route({
       origin: new google.maps.LatLng({lat: latitude, lng: longitude}),
       destination: centerOfMap,
       travelMode: 'DRIVING'
@@ -155,7 +157,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, latitud
       } else {
         window.alert('Directions request failed due to ' + status);
       }
-    });
+    });*/
   }
 
 function addPin(pinData){
