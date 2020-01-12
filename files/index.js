@@ -43,7 +43,9 @@ function whenGoogleMapsAPIReady(){
 	$addFoodLocationButton.onclick = () => {
 		map.setOptions({draggableCursor: 'crosshair'});
 		map.addListener('click', e => {
-			updateFoodLocationDetails(e.latLng.lat(), e.latLng.lng());
+			const latitude = e.latLng.lat()
+			const longitude = e.latLng.lng()
+			updateFoodLocationDetails({latitude, longitude});
 		});
 	}
 
