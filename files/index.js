@@ -47,10 +47,14 @@ function updateFoodLocationDetails(data){
 
 // Init Google Maps functionality
 function whenGoogleMapsAPIReady(){
+	var directionsRenderer = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
 	const map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.8283, lng: -98.5795},
 		zoom: 5
 	})
+	directionsRenderer.setMap(map);
+   	directionsRenderer.setPanel(document.getElementById('right-panel'));
 
 	const $addFoodLocationButton = document.querySelector('#add-food-location-button')
 	$addFoodLocationButton.onclick = () => {
@@ -72,7 +76,8 @@ function whenGoogleMapsAPIReady(){
 					<h3>${data.instructions}</h3>
 					<h3>${data.icon}</h3>
 					<h3>${data.phone}</h3>
-					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" onclick="alert(this.dataset.lat+', '+this.dataset.lng)">Directions</button>
+					<button name="directionButton" data-lat="${data.latitude}" data-lng="${data.longitude}" 
+					onclick="${calculateAndDisplayRoute(directionsRenderer,directionsService, data.latitude,data.longitude, map.getCenter())}">Directions</button>
 				`
 			})
 
@@ -139,6 +144,19 @@ function unsupportedLocationError() {
 	window.alert("Your browser doesn't support location access from google map!")
 }
 
+function calculateAndDisplayRoute(directionsService, directionsRenderer, latitude, longitude, centerOfMap) {
+    directionsService.route({
+      origin: new google.maps.LatLng({lat: latitude, lng: longitude}),
+      destination: centerOfMap,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsRenderer.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
 
 function addPin(pinData){
 	db.collection('Pins').add(pinData)
