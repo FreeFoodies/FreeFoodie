@@ -106,6 +106,15 @@ button {
 	cursor: pointer;
 }
 
+label {
+	gap: 0.3em;
+}
+label span {
+	opacity: 0.5;
+	font-size: 0.7em;
+	text-transform: uppercase;
+	letter-spacing: 0.2ch;
+}
 
 .modal, .side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
