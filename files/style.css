@@ -99,29 +99,47 @@ aside {
 	width: 30%;
 }
 
+form {
+	padding: 1.5em;
+	gap: 1em;
+}
 
 
-input, button, textarea {
+.radio-group {
+	display: grid;
+	overflow-x: auto;
+	grid-auto-flow: column;
+	gap: 0.5em;
+}
+input[type=radio] {
+	display: none;
+}
+input[type=text], input[type=password], input[type=tel], input[type=radio] + span, button, textarea {
 	-webkit-appearance: none;
 	border: none;
 	border-radius: 0.2em;
 	padding: 0.5em 0.75em;
 
+	border: rgba(0, 0, 0, 0.2) solid 1px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px;
+
 	/* background-color: rgba(255, 255, 255, 0.9); */
 	background-color: transparent;
 	backdrop-filter: brightness(200%);
 	transition: 0.2s;
-	transition-property: background-color, backdrop-filter;
-
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px;
+	transition-property: background-color, backdrop-filter, color;
 }
 input:hover, button:hover, textarea:hover {
 	/* background-color: rgba(255, 255, 255, 1); */
 	backdrop-filter: brightness(210%);
 }
-form input, form button, form textarea {
-	border: rgba(0, 0, 0, 0.2) solid 1px;
+
+input[type=radio]:checked + span {
+	/* background-color: var(--primary-color); */
+	background-color: rgba(0, 0, 0, 0.2);
+	color: #fff;
 }
+
 button {
 	line-height: 1;
 	padding: 0.5em 0.75em;
@@ -129,32 +147,32 @@ button {
 	cursor: pointer;
 }
 
+
 label {
 	gap: 0.3em;
 }
-label span {
+label span:first-child {
 	opacity: 0.5;
 	font-size: 0.7em;
 	text-transform: uppercase;
 	letter-spacing: 0.2ch;
 }
 
+.hideable {
+	transition: 0.2s;
+}
 .modal, .side-menu {
 	background-color: rgba(255, 255, 255, 0.7);
 	backdrop-filter: blur(4px) hue-rotate(-60deg);
-	border-radius: 0.5em;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0.5em, rgba(0, 0, 0, 0.1) 0 2px 1em;
-
-	padding: 1.5em;
-	gap: 1em;
-
-	transition: 0.2s;
 }
 .modal .close, .side-menu .close {
 	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 1em;
+	right: 0.5em;
+	top: 0.5em;
+	width: 2em;
+	height: 2em;
+	padding: 0;
 }
 /*.modal .close::before, .modal .side-menu::before {
 	content: '';
@@ -175,6 +193,8 @@ label span {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+
+	border-radius: 0.5em;
 }
 .modal[hidden] {
 	opacity: 0;
@@ -183,15 +203,20 @@ label span {
 }
 
 .side-menu {
+	display: block;
 	position: relative;
 	overflow-y: auto;
-}
-.side-menu {
+
+	border-radius: 0.5em;
+	
 	width: 25em;
 }
 .side-menu[hidden] {
 	/* font-size: 0; */
-	width: 0;
+	width: 0em;
+}
+.side-menu form {
+	margin: 0.75em;
 }
 
 
@@ -201,4 +226,9 @@ h1, h2, h3, h4 {
 }
 h2 {
 	font-size: 1.4em;
+}
+
+
+header nav button {
+	border: none;
 }
